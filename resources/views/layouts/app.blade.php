@@ -33,6 +33,14 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('niceadmin/css/style.css') }}" rel="stylesheet">
 
+    <style>
+        label.required::after {
+            content: " *";
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+
     <!-- =======================================================
   * Template Name: NiceAdmin
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -48,7 +56,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ route('dashboard.index') }}" class="logo d-flex align-items-center">
                 <img src="{{ asset('niceadmin/img/logo.png') }}" alt="">
                 <span class="d-none d-lg-block">NiceAdmin</span>
             </a>
@@ -126,11 +134,18 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="index.html">
+                <a class="nav-link collapsed" href="{{ route('dashboard.index') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ route('user.index') }}">
+                    <i class='bx bx-user-pin'></i>
+                    <span>User</span>
+                </a>
+            </li>
 
         </ul>
 
@@ -177,6 +192,26 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('niceadmin/js/main.js') }}"></script>
+
+    <script>
+        new DataTable('#data-table');
+        $('.form').parsley({
+            errorClass: 'is-invalid text-red',
+            successClass: 'is-valid',
+            errorsWrapper: '<span class="invalid-feedback"></span>',
+            errorTemplate: '<span></span>',
+            trigger: 'change'
+        });
+
+        $('#upload').on('change', function(event) {
+            $('#preview').attr('src', URL.createObjectURL(event.target.files[0]));
+        })
+
+        $('.select2-default').select2({
+            theme: 'bootstrap-5',
+            width: "100%",
+        })
+    </script>
 
     @stack('scripts')
 
