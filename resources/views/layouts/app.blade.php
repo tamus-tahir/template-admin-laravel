@@ -175,6 +175,29 @@
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
 
+    {{-- modal delete --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <form action="" method="post" id="form-delete">
+                @csrf
+                @method('delete')
+
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Apakah anda ingin menghapus data?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Ya, hapus data</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
     @stack('modals')
 
     <!-- add on -->
@@ -211,6 +234,15 @@
             theme: 'bootstrap-5',
             width: "100%",
         })
+
+        let flashSuccess = "{{ session('success') ?? '' }}";
+        if (flashSuccess) {
+            Swal.fire({
+                title: "Mantap",
+                text: flashSuccess,
+                icon: "success"
+            });
+        }
     </script>
 
     @stack('scripts')

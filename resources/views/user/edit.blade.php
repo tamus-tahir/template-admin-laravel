@@ -8,8 +8,9 @@
 
     <div class="card shadow p-3">
 
-        <form action="{{ route('user.store') }}" method="post" enctype="multipart/form-data" class="form">
+        <form action="{{ route('user.update', $user) }}" method="post" enctype="multipart/form-data" class="form">
             @csrf
+            @method('put')
 
             <div class="row g-3 mb-3">
                 <div class="col-md-3">
@@ -21,15 +22,15 @@
                             {{ $message }}
                         </div>
                     @enderror
-                    <img src="{{ asset('niceadmin/img/noprofil.png') }}" alt="Avatar" class="w-100 rounded mt-2"
-                        id="preview">
+                    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('niceadmin/img/noprofil.png') }}"
+                        alt="Avatar" class="w-100 rounded mt-2" id="preview">
                 </div>
 
                 <div class="col-md-9">
                     <div class="mb-3">
                         <label for="name" class="form-label required">Nama</label>
                         <input class="form-control @error('name') is-invalid  @enderror" type="text" id="name"
-                            name="name" required value="{{ old('name') }}">
+                            name="name" required value="{{ old('name', $user->name) }}">
                         @error('name')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -40,7 +41,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label required">Email</label>
                         <input class="form-control @error('email') is-invalid  @enderror" type="email" id="email"
-                            name="email" required value="{{ old('email') }}">
+                            name="email" required value="{{ old('email', $user->email) }}">
                         @error('email')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -49,9 +50,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label required">Password</label>
+                        <label for="password" class="form-label ">Password</label>
                         <input class="form-control @error('password') is-invalid  @enderror" type="password"
-                            id="password" name="password" required minlength="8">
+                            id="password" name="password" minlength="8">
                         @error('password')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -60,9 +61,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="passwordconfirm" class="form-label required">Konfirmasi Password</label>
+                        <label for="passwordconfirm" class="form-label ">Konfirmasi Password</label>
                         <input class="form-control @error('passwordconfirm') is-invalid  @enderror" type="password"
-                            id="passwordconfirm" name="passwordconfirm" required data-parsley-equalto="#password">
+                            id="passwordconfirm" name="passwordconfirm" data-parsley-equalto="#password">
                         @error('passwordconfirm')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -75,8 +76,8 @@
                         <select class="form-select select2-default @error('role') is-invalid  @enderror" id="role"
                             name="role" required>
                             <option value="">Pilih Role</option>
-                            <option value="Superadmin" @selected(old('role') == 'Superadmin')>Superadmin</option>
-                            <option value="Admin" @selected(old('role') == 'Admin')>Admin</option>
+                            <option value="Superadmin" @selected(old('role', $user->role) == 'Superadmin')>Superadmin</option>
+                            <option value="Admin" @selected(old('role', $user->role) == 'Admin')>Admin</option>
                         </select>
                         @error('role')
                             <div class="invalid-feedback">
