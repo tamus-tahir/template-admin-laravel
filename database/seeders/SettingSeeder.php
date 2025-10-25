@@ -16,7 +16,7 @@ class SettingSeeder extends Seeder
         Setting::create([
             'app_name' => 'Admin Laravel',
             'copyright' => 'Tamus Tahir | 2025',
-            'login_title' => 'Admin Laravel',
+            'login_title' => 'Page Login',
         ]);
     }
 }
